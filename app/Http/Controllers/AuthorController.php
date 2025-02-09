@@ -35,7 +35,15 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required|max:80',
+            'last_name'=>'required|max:80',
+            'country_id'=>'required|numeric'
+        ]);
+
+        $author=new Author($request->input());
+        $author->save();
+        redirect('authors');
     }
 
     /**
@@ -51,7 +59,8 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        
+
     }
 
     /**
@@ -59,7 +68,13 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        $request->validate([
+            'name'=>'required|max:80',
+            'last_name'=>'required|max:80',
+            'country_id'=>'required|numeric'
+        ]);
+        $author->update($request->input());
+        redirect('authors');
     }
 
     /**
@@ -67,6 +82,7 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+        $author->delete();
+        redirect('authors');
     }
 }
